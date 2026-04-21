@@ -191,10 +191,10 @@ func internalizeInstallers(
       }
     }
 
-    logging.Logger.Debug().Str("package", packageIdentifier).Str("packageversion", packageVersion).Msgf("prepared internaliziation")
+    logging.Logger.Debug().Str("package", packageIdentifier).Str("packageversion", packageVersion).Msgf("prepared internalization")
     // Remember that this installer was internalized successfully (could be or already was downloaded)
     // so we know we can rewrite its InstallerUrl later.
-    models.InternalizedInstallers[installer.GetInstallerSha()] = true
+    models.InternalizedInstallers.Set(installer.GetInstallerSha(), true)
   }
 }
 

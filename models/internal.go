@@ -73,6 +73,24 @@ func findField(v interface{}, name string) reflect.Value {
   return reflect.Value{}
 }
 
+// Internal in-memory list of successfully internalized installers
+type InternalizedInstallersStore struct {
+    sync.RWMutex
+    internal map[string]bool
+}
+
+func (store *InternalizedInstallersStore) Set(installerSha string, isInternalized bool) {
+    store.Lock()
+    store.internal[installerSha] = isInternalized
+    store.Unlock()
+}
+
+func (store *InternalizedInstallersStore) Get(installerSha string) bool {
+    store.RLock()
+    defer store.RUnlock()
+    return store.internal[installerSha]
+}
+
 // Internal in-memory data store of all manifest data
 type ManifestsStore struct {
     sync.RWMutex
@@ -338,7 +356,9 @@ func isDefault(v reflect.Value) bool {
 
 // This map is used to remember which InstallerSHAs were successfully
 // internalized on manifest ingestion and can have their InstallerUrls rewritten.
-var InternalizedInstallers = make(map[string]bool)
+var InternalizedInstallers = InternalizedInstallersStore{
+    internal: make(map[string]bool),
+}
 
 // Global variable that will hold all in-memory manifest data
 var Manifests = ManifestsStore{

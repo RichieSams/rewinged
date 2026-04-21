@@ -71,7 +71,7 @@ func (this *GetPackageHandler) GetPackage(w http.ResponseWriter, r *http.Request
 
           for j := 0; j < len(installers); j++ {
               // Only rewrite this installers InstallerUrl if it was marked for it on ingest
-              if models.InternalizedInstallers[installers[j].GetInstallerSha()] {
+              if models.InternalizedInstallers.Get(installers[j].GetInstallerSha()) {
                   installers[j].SetInstallerUrl(
                       fmt.Sprintf(
                           "%s/installers/%s",
