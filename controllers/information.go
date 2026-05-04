@@ -16,6 +16,7 @@ func GetInformation(w http.ResponseWriter, r *http.Request) {
     response.Data.SourceIdentifier = "rewinged"
     // New API schema versions have to be included here or winget CLI client won't pick
     // up the features / data fields from newer packages even if they are returned
+    // NOTE: As of May 2026 there is no 1.12.0 API schema yet: https://github.com/microsoft/winget-cli-restsource/tree/main/documentation
     response.Data.ServerSupportedVersions = []string{"1.1.0", "1.4.0", "1.5.0", "1.6.0", "1.7.0", "1.9.0", "1.10.0"}
 
     switch settings.SourceAuthenticationType {

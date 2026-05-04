@@ -241,7 +241,9 @@ func unmarshalVersionManifest (manifestVersion string, node yaml.Node) (models.M
           version = &models.Manifest_VersionManifest_1_7_0{}
         case "1.9.0":
           version = &models.Manifest_VersionManifest_1_9_0{}
-        case "1.10.0":
+        // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+        // but I don't validate/enum the InstallerType field anyway.
+        case "1.10.0", "1.12.0":
           version = &models.Manifest_VersionManifest_1_10_0{}
         default:
           return nil, errors.New("unsupported VersionManifest version " + manifestVersion)
@@ -273,7 +275,9 @@ func unmarshalInstallerManifest (manifestVersion string, node yaml.Node) (models
             installer = &models.Manifest_InstallerManifest_1_7_0{}
         case "1.9.0":
             installer = &models.Manifest_InstallerManifest_1_9_0{}
-        case "1.10.0":
+        // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+        // but I don't validate/enum the InstallerType field anyway.
+        case "1.10.0", "1.12.0":
             installer = &models.Manifest_InstallerManifest_1_10_0{}
         default:
             return nil, errors.New("unsupported InstallerManifest version " + manifestVersion)
@@ -305,7 +309,9 @@ func unmarshalLocaleManifest (manifestVersion string, node yaml.Node) (models.Ma
             locale = &models.Manifest_LocaleManifest_1_7_0{}
         case "1.9.0":
             locale = &models.Manifest_LocaleManifest_1_9_0{}
-        case "1.10.0":
+        // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+        // but I don't validate/enum the InstallerType field anyway.
+        case "1.10.0", "1.12.0":
             locale = &models.Manifest_LocaleManifest_1_10_0{}
         default:
             return nil, errors.New("unsupported LocaleManifest version " + manifestVersion)
@@ -337,7 +343,9 @@ func unmarshalDefaultLocaleManifest (manifestVersion string, node yaml.Node) (mo
             defaultlocale = &models.Manifest_DefaultLocaleManifest_1_7_0{}
         case "1.9.0":
             defaultlocale = &models.Manifest_DefaultLocaleManifest_1_9_0{}
-        case "1.10.0":
+        // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+        // but I don't validate/enum the InstallerType field anyway.
+        case "1.10.0", "1.12.0":
             defaultlocale = &models.Manifest_DefaultLocaleManifest_1_10_0{}
         default:
             return nil, errors.New("unsupported DefaultLocaleManifest version " + manifestVersion)
@@ -591,7 +599,9 @@ func newAPIManifest (
       PackageIdentifier: PackageIdentifier,
       Versions: []models.API_ManifestVersionInterface{ apiMvi },
     }
-  } else if ManifestVersion == "1.10.0" {
+  } else if ManifestVersion == "1.10.0" || ManifestVersion == "1.12.0" {
+    // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+    // but I don't validate/enum the InstallerType field anyway. A separate API schema v1.12.0 doesn't even exist at all.
     var apiLocales []models.API_Locale_1_10_0
     for _, locale := range l {
       apiLocales = append(apiLocales, locale.(models.API_Locale_1_10_0))
@@ -686,7 +696,9 @@ func unmarshalSingletonManifest (manifestVersion string, node yaml.Node) (models
             smanifest = &models.Manifest_SingletonManifest_1_7_0{}
         case "1.9.0":
             smanifest = &models.Manifest_SingletonManifest_1_9_0{}
-        case "1.10.0":
+        // Manifest schemas 1.10.0 and 1.12.0 are identical except for the addition of the InstallerType "font",
+        // but I don't validate/enum the InstallerType field anyway.
+        case "1.10.0", "1.12.0":
             smanifest = &models.Manifest_SingletonManifest_1_10_0{}
         default:
             return nil, errors.New("unsupported SingletonManifest version " + manifestVersion)
